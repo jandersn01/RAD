@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog'
+    'blog', 
+    'edu',
 ]
 
 MIDDLEWARE = [
@@ -54,9 +55,9 @@ ROOT_URLCONF = 'myapp.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates', #Qual engine está sendo usada? DjagoTemplates
+        'DIRS': [], #Aode mais o django deve buscar templates?
+        'APP_DIRS': True, #Se for true, o djsngo sempre vai procurar templates dentro dos eps
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',

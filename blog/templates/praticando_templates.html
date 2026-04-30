@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEu template-blog</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+     {% block content %}
+
+    {% if is_logged_in %}
+        <h1>Olá,{{ nome }}! Bem vindo de volta</h1>
+        <p>Data: {{ data|date:"d/m/Y" }}</p>
+
+        <table border="1">
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                </tr>
+                {% for produto in produtos %}
+                    <tr>
+                        <td>{{ produto.nome }}</td>
+                        <td>R$ {{ produto.preco|floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+
+        
+
+    {% else %}
+        <p>Olá, visitante! Por favor, faça login.</p>
+    {% endif %}
+         {% endblock %}
+    
+</body>
+</html>

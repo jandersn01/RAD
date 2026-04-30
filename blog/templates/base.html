@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home-blog</title>
+</head>
+<body>
+    <header>
+        {% block header %}
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block content%}
+    
+        {% endblock %}      
+    </main>
+
+    <footer>
+        {% block footer %}
+        <p>&copy; 2026 Meu Blog. Todos os direitos reservados.</p>
+        {% endblock %}
+    </footer>
+</body>
+</html>
