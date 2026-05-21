@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>Cadastre-se</h1>
+    <form action="" method="Post" novalidate>
+        {% crsf_token %}
+        {% for field in form %}
+            <div class="form-row">
+                {{field.label_tag}}
+                {{field}}
+                {% if field.errors %}
+                    <div class="error">
+                        {{field.errors}}
+                    </div>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+        <div class="form-actions">
+            <button type="submit" class="btn">Criar Conta</button>
+
+        </div>
+    </form>
+    <p>Já tem uma conta? <a href="{% url 'edu:login' %}">Faça login aqui</a>.</p>
+</body>
+</html>
