@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import login
-
-from core.forms import SignUpForm
+from django.utils.http import url_has_allowed_host_and_scheme
+from core.forms import SignUpForm , LoginForm
 
 def signup(request):
     if request.method == 'POST':
@@ -16,8 +16,20 @@ def signup(request):
     return render(request, 'edu/signup.html', {'form': form})
 
 def login_view(request):
-    # Lógica para lidar com o login de usuários
-    return render(request, 'edu/login.html')
+    if request.method == 'POST':
+        form = LoginForm(request=request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            next_url = request.POST.get('next' ,'') or request.GET.get('next', '')
+            if next_url and url_has_allowed_host_and_scheme(
+                next_url, allowed_hosts={request.get_host()}):
+                return redirect(next_url)
+            
+            return redirect('edu:home')
+    else:
+        form = LoginForm()
+    return render(request, 'edu/login.html', {'form' : form})
 
 def logout_view(request):
     # Lógica para lidar com o logout de usuários
