@@ -10,7 +10,8 @@
 
     {% block content %}
     <h1>Bem vindo ao meu blog!</h1>
-    <button><a href="{% url 'contato' telefone='11999999999' %}">Contato</a></button>
+    <button><a href="{% url 'edu:create_livro' %}">Criar Livro</a></button>
+    <button><a href="{% url 'blog:contato' telefone='11999999999' %}">Contato</a></button>
     {% endblock %}
 </body>
 </html>

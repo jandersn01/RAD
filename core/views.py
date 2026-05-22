@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import login
-from django.utils.http import url_has_allowed_host_and_scheme
+from django.contrib.auth import login, logout
+from django.utils.http import url_has_allowed_host_and_scheme 
 from core.forms import SignUpForm , LoginForm
+from django.http import HttpResponseNotAllowed
 
 def signup(request):
     if request.method == 'POST':
@@ -9,11 +10,11 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user) # cria a sessão do usuário. Define request.user para  esse usuário. Cria coockie da sessão.
-            return redirect('edu:home')
+            return redirect('blog:home')
     else:
         form = SignUpForm() 
     # Lógica para lidar com o cadastro de usuários
-    return render(request, 'edu/signup.html', {'form': form})
+    return render(request, 'core/signup.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -26,12 +27,14 @@ def login_view(request):
                 next_url, allowed_hosts={request.get_host()}):
                 return redirect(next_url)
             
-            return redirect('edu:home')
+            return redirect('blog:home')
     else:
         form = LoginForm()
-    return render(request, 'edu/login.html', {'form' : form})
+    return render(request, 'core/login.html', {'form' : form})
 
 def logout_view(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+    logout(request)
     # Lógica para lidar com o logout de usuários
-    return render(request, 'edu/logout.html')
-# Create your views here.
+    return redirect('core:login')

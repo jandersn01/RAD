@@ -3,15 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
+    <title>{{Titulo}}</title>
 </head>
 <body>
-    <h1>{{ titulo }}</h1>
+    <h1>Lista de Autores</h1>
     <ul>
         {% for autor in autores %}
             <li>{{ autor.nome }} - {{ autor.nacionalidade }}</li>
+        {% empty %}
+            <li>No authors available.</li>
         {% endfor %}
-    </ul>
-    
+    </ul> 
+    {% if autores.has_other_pages %}
+        <nav class="paginaton" aria-label="Page Navigation">
+            <ul style = list-style-type:none; display: flex; gap: 10px; padding: 0;">
+                {% if autores.has_previous %}
+                    <li><a href="?page={{ autores.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for num in autores.paginator.page_range %}
+                    {% if autores.number == num %}
+                        <li><strong>{{ num }}</strong></li>
+                    {% else %}
+                        <li><a href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if autores.has_next %}
+                    <li><a href="?page={{ autores.next_page_number }}">Next</a></li>
+                {% else %}
+                    <li><span style="opacity: 0.5;">Next</span></li>
+                {% endif %}
+
+            </ul>
+
+        </nav>
+    {% endif %}
 </body>
 </html>

@@ -1,9 +1,9 @@
 services:
   web:
       build: .
-      command: python manage.py runserver 0.0.0.0:8000
+      command: python manage.py runserver 0.0.0.0:8080
       volumes:
         - .:/app #bind Mount
                  #Poderia docker volume reais para guardar dados do container
       ports:
-        - "8000:8000" #host:container
+        - "8080:8080" #host:container

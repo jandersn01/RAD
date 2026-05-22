@@ -102,6 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 AUTH_USER_MODEL = 'core.User'
 
+LOGIN_URL = 'core:login'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
