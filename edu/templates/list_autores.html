@@ -9,7 +9,7 @@
     <h1>Lista de Autores</h1>
     <ul>
         {% for autor in autores %}
-            <li>{{ autor.nome }} - {{ autor.nacionalidade }}</li>
+            <li>{{ autor.nome }}</li>
         {% empty %}
             <li>No authors available.</li>
         {% endfor %}
