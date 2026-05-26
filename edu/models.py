@@ -16,3 +16,10 @@ class Livro(models.Model):
     preco = models.DecimalField(max_digits=6, decimal_places=2)
     editora = models.ForeignKey("Editora", on_delete=models.CASCADE)
 
+
+class Curso(models.Model):
+    nome = models.CharField(max_length=50)
+
+class Aluno(models.Model):
+    nome = models.CharField(max_length=255)
+    curso = models.ForeignKey("Curso", on_delete=models.CASCADE)

@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from edu.forms import AutorForm, EditoraForm, LivroForm
-from edu.models import Autor, Editora, Livro
+from edu.forms import AutorForm, EditoraForm, LivroForm, CursoForm, AlunoForm
+from edu.models import Autor, Editora, Livro, Curso, Aluno
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -128,3 +128,27 @@ def list_livros_paginator(request):
     except EmptyPage:
         livros = paginator.page(paginator.num_pages)
     return render(request, "./list_livros_paginator.html", {"livros": livros})
+
+@login_required
+def create_curso(request):
+    if request.method == 'POST':
+        form = CursoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('edu:cursos')
+    else:
+        form = CursoForm()
+        return render(request, "./curso_form.html", {'form': form})
+    
+@login_required
+def list_curso(request):
+    cursos = Curso.objects.all()
+    page = request.GET.get("page", 1)
+    paginator = Paginator(cursos, 5)
+    try:
+        cursos = paginator.page(page)
+    except PageNotAnInteger:
+        cursos = paginator.page(1)
+    except EmptyPage:
+        cursos = paginator.page(page.num_pages)
+    return render(request, './cursos.html', {'cursos': cursos})
