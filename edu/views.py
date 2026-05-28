@@ -152,3 +152,66 @@ def list_curso(request):
     except EmptyPage:
         cursos = paginator.page(page.num_pages)
     return render(request, './cursos.html', {'cursos': cursos})
+
+@login_required
+def update_curso(request, curso_id):
+    curso = Curso.objects.get(id = curso_id)
+    if request.method == 'POST':
+        form = CursoForm(request.POST,instance=curso)
+        if form.is_valid():
+            form.save()
+            return redirect('edu:cursos')
+    else: 
+        form = CursoForm(instance=curso)
+        return render(request, './curso_form.html', {'form': form})
+    
+@login_required
+def delete_curso(request, id_curso):
+    curso = Curso.objects.get(id = id_curso)
+    if request.method == 'POST':
+        curso.delete()
+        return redirect('edu:cursos')
+    
+@login_required
+def crate_aluno(request):
+    if request.method == 'POST':
+        form = AlunoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('edu:alunos')
+    else: 
+        form = AlunoForm()
+        return render(request, './aluno_form.html', {'form': form})
+
+
+@login_required
+def list_aluno(request):
+    alunos = Aluno.objects.all()
+    page = request.GET.get('pages', 1)
+    paginator = Paginator(alunos, 5)
+    try:
+        alunos = paginator.page(page)
+    except EmptyPage:
+        alunos = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        alunos = paginator.page(1)
+    return render(request, './alunos.html', {'alunos': alunos})
+
+@login_required
+def update_aluno(request, id_aluno):
+    aluno = Aluno.objects.get(id = id_aluno)
+    if request.method == 'POST':
+        form = AlunoForm(request.POST, instance=aluno)
+        if form.is_valid():
+            form.save()
+            return redirect ('edu:alunos')
+    else:
+        form = AlunoForm()
+        return render( request, './aluno_form.html', {'form': form})
+
+@login_required
+def delete_aluno(request, id_aluno):
+    aluno = Aluno.objects.get(id = id_aluno)
+    if request.method == 'POST':
+        aluno.delete()
+        redirect('edu:alunos')
