@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% extends '../blog/base.html' %}
+    {% block titulo %}List de Alunos{% endblock %}
+    {% block content %}
+        <h1>Lista de Alunos</h1>
+            {% if 'perms.edu.add_aluno' %}
+                <p><a href="{% url 'edu:create_aluno' %}">Create</a></p>
+            {% endif %}
+
+        <ul>
+            {% for aluno in cursos %}
+                <li>{{aluno.nome}} - {{aluno.curso__nome}}
+                    {% if perms.edu.change_aluno %}
+                        - <a href="{% url 'edu:update_aluno' aluno.id %}">Editar</a>
+                    {% endif %}
+                    {% if perms.edu.delete_aluno %}
+                        - <a href="{% url 'edu:delete_aluno' aluno.id %}">Deletar</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>Nenhum Aluno Para Mostrar</li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+    
+</body>
+</html>

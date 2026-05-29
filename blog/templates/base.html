@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home-blog</title>
+    <title>{% block titulo %}Meu site{% endblock %}</title>
 </head>
 <body>
     <header>
@@ -13,6 +13,8 @@
                 <a href="{% url 'edu:list_livros_paginator' %}">Livros</a>
                 <a href="{% url 'edu:list_autores' %}">Autores</a>
                 <a href="{% url 'edu:list_editoras' %}">Editoras</a>
+                <a href="{% url 'edu:list_cursos' %}">Cursos</a>
+                <a href="{% url 'edu:list_alunos' %}">Alunos</a>
             </nav>
             <span style="margin-right: 8px;">Olá, {{request.user.username}}</span>
             <form action="{% url 'core:logout' %}" method="post" style="display: inline;">
@@ -25,8 +27,6 @@
                 <a href="{% url 'core:signup' %}">Registrar</a>
             </nav>
         {% endif %}
-        {% block header %}
-        {% endblock %}
     </header>
 
 

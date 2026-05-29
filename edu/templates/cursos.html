@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% extends '../blog/base.html' %}
+    {% block titulo %}List de Cursos{% endblock %}
+    {% block content %} 
+        <h1>Lista de Cursos</h1>
+            {% if perms.edu.add_curso %}
+                <p>
+                    <a href="{% url 'edu:create_curso' %}">Adicionar Curso</a>
+                </p>
+            {% endif %}
+        <ul>
+            {% for curso in cursos %}
+                <li>{{ curso.nome }}
+                    {% if perms.edu.change_curso %}
+                       - <a href="{% url 'edu:update_curso' curso.id %}">Editar</a>
+                    {% endif %}
+                    {% if perms.edu.delete_curso %}
+                       - <a href="{% url 'edu:delete_curso' curso.id %}">Excluir</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <p>Nenhum curso encontrado.</p>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+
+    
+</body>
+</html>

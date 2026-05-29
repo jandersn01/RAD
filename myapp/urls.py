@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from blog import views
 
 
 urlpatterns = [
@@ -23,4 +24,5 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     path("edu/", include("edu.urls")),
     path("core/", include("core.urls")),
+    path("", views.home, name="home")
 ]

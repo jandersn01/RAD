@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from edu.forms import AutorForm, EditoraForm, LivroForm, CursoForm, AlunoForm
 from edu.models import Autor, Editora, Livro, Curso, Aluno
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
 @login_required
@@ -129,7 +129,7 @@ def list_livros_paginator(request):
         livros = paginator.page(paginator.num_pages)
     return render(request, "./list_livros_paginator.html", {"livros": livros})
 
-@login_required
+@permission_required('edu.add_curso')
 def create_curso(request):
     if request.method == 'POST':
         form = CursoForm(request.POST)
@@ -140,7 +140,7 @@ def create_curso(request):
         form = CursoForm()
         return render(request, "./curso_form.html", {'form': form})
     
-@login_required
+@permission_required('edu.view_curso')
 def list_curso(request):
     cursos = Curso.objects.all()
     page = request.GET.get("page", 1)
@@ -153,7 +153,7 @@ def list_curso(request):
         cursos = paginator.page(page.num_pages)
     return render(request, './cursos.html', {'cursos': cursos})
 
-@login_required
+@permission_required('edu:change_curso')
 def update_curso(request, curso_id):
     curso = Curso.objects.get(id = curso_id)
     if request.method == 'POST':
@@ -165,15 +165,15 @@ def update_curso(request, curso_id):
         form = CursoForm(instance=curso)
         return render(request, './curso_form.html', {'form': form})
     
-@login_required
+@permission_required('edu.delete_curso')
 def delete_curso(request, id_curso):
     curso = Curso.objects.get(id = id_curso)
     if request.method == 'POST':
         curso.delete()
         return redirect('edu:cursos')
     
-@login_required
-def crate_aluno(request):
+@permission_required('edu.add_aluno')
+def create_aluno(request):
     if request.method == 'POST':
         form = AlunoForm(request.POST)
         if form.is_valid():
@@ -184,7 +184,7 @@ def crate_aluno(request):
         return render(request, './aluno_form.html', {'form': form})
 
 
-@login_required
+@permission_required('edu.view_aluno')
 def list_aluno(request):
     alunos = Aluno.objects.all()
     page = request.GET.get('pages', 1)
@@ -197,7 +197,7 @@ def list_aluno(request):
         alunos = paginator.page(1)
     return render(request, './alunos.html', {'alunos': alunos})
 
-@login_required
+@permission_required('edu.change_aluno')
 def update_aluno(request, id_aluno):
     aluno = Aluno.objects.get(id = id_aluno)
     if request.method == 'POST':
@@ -209,7 +209,7 @@ def update_aluno(request, id_aluno):
         form = AlunoForm()
         return render( request, './aluno_form.html', {'form': form})
 
-@login_required
+@permission_required('edu.delete_aluno')
 def delete_aluno(request, id_aluno):
     aluno = Aluno.objects.get(id = id_aluno)
     if request.method == 'POST':
