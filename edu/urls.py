@@ -18,10 +18,10 @@ urlpatterns = [
     path("livros/", views.list_livros_paginator, name="list_livros_paginator"),
     path("cursos/", views.list_curso, name="list_cursos"),
     path("cursos/create/", views.create_curso, name="create_curso"),
-    path("cursos/update/<int:id_aluno>/", views.update_curso, name="update_curso"),
+    path("cursos/update/<int:id_curso>/", views.update_curso, name="update_curso"),
     path("cursos/delete/<int:id_curso>/", views.delete_curso, name="delete_curso"),
     path("alunos/", views.list_aluno, name="list_alunos"),
     path("alunos/create/", views.create_aluno, name="create_aluno"),
-    path("alunos/update/<int:aluno_id>/", views.update_aluno, name="update_aluno"),
-    path("alunos/delete/<int:aluno_id>/", views.delete_aluno, name="delete_aluno"),
+    path("alunos/update/<int:id_aluno>/", views.update_aluno, name="update_aluno"),
+    path("alunos/delete/<int:id_aluno>/", views.delete_aluno, name="delete_aluno"),
 ]

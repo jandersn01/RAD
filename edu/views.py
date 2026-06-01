@@ -217,3 +217,4 @@ def delete_aluno(request, id_aluno):
     if request.method == 'POST':
         aluno.delete()
         redirect('edu:list_alunos')
+    return redirect ('edu:list_alunos')

@@ -14,13 +14,16 @@
             {% endif %}
 
         <ul>
-            {% for aluno in cursos %}
+            {% for aluno in alunos %}
                 <li>{{aluno.nome}} - {{aluno.curso__nome}}
                     {% if perms.edu.change_aluno %}
                         - <a href="{% url 'edu:update_aluno' aluno.id %}">Editar</a>
                     {% endif %}
                     {% if perms.edu.delete_aluno %}
-                        - <a href="{% url 'edu:delete_aluno' aluno.id %}">Deletar</a>
+                        <form action="{% url 'edu:delete_aluno' aluno.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Deletar</button>
+                        </form>
                     {% endif %}
                 </li>
             {% empty %}

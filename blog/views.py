@@ -19,7 +19,7 @@ def praticando_templates(request, nome:str):
     return render(request, "praticando_templates.html", context)
 
 def home(request):
-    return render(request, "home.html")
+    return render(request, "blog/home.html")
 
 def contato(request, telefone:str):
     telefone_formatado = f"({telefone[:2]}) {telefone[2:7]}-{telefone[7:]}"
