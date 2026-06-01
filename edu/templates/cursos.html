@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    {% extends '../blog/base.html' %}
+    {% extends "blog/base.html" %}
     {% block titulo %}List de Cursos{% endblock %}
     {% block content %} 
         <h1>Lista de Cursos</h1>
@@ -21,7 +21,10 @@
                        - <a href="{% url 'edu:update_curso' curso.id %}">Editar</a>
                     {% endif %}
                     {% if perms.edu.delete_curso %}
-                       - <a href="{% url 'edu:delete_curso' curso.id %}">Excluir</a>
+                        <form action="{% url 'edu:delete_curso' curso.id %}" method="post">
+                            {% csrf_token %}
+                                <button type="submit">Apagar</button>
+                        </form>
                     {% endif %}
                 </li>
             {% empty %}

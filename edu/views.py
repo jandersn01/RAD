@@ -4,6 +4,7 @@ from edu.forms import AutorForm, EditoraForm, LivroForm, CursoForm, AlunoForm
 from edu.models import Autor, Editora, Livro, Curso, Aluno
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 @login_required
@@ -135,7 +136,7 @@ def create_curso(request):
         form = CursoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('edu:cursos')
+            return redirect('edu:list_cursos')
     else:
         form = CursoForm()
         return render(request, "./curso_form.html", {'form': form})
@@ -160,17 +161,18 @@ def update_curso(request, curso_id):
         form = CursoForm(request.POST,instance=curso)
         if form.is_valid():
             form.save()
-            return redirect('edu:cursos')
+            return redirect('edu:list_cursos')
     else: 
         form = CursoForm(instance=curso)
         return render(request, './curso_form.html', {'form': form})
     
 @permission_required('edu.delete_curso')
 def delete_curso(request, id_curso):
-    curso = Curso.objects.get(id = id_curso)
+    curso = get_object_or_404(Curso, id = id_curso)
     if request.method == 'POST':
         curso.delete()
-        return redirect('edu:cursos')
+        return redirect('edu:list_cursos')
+    return redirect('edu:list_cursos')
     
 @permission_required('edu.add_aluno')
 def create_aluno(request):
@@ -178,7 +180,7 @@ def create_aluno(request):
         form = AlunoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('edu:alunos')
+            return redirect('edu:list_alunos')
     else: 
         form = AlunoForm()
         return render(request, './aluno_form.html', {'form': form})
@@ -204,7 +206,7 @@ def update_aluno(request, id_aluno):
         form = AlunoForm(request.POST, instance=aluno)
         if form.is_valid():
             form.save()
-            return redirect ('edu:alunos')
+            return redirect ('edu:list_alunos')
     else:
         form = AlunoForm()
         return render( request, './aluno_form.html', {'form': form})
@@ -214,4 +216,4 @@ def delete_aluno(request, id_aluno):
     aluno = Aluno.objects.get(id = id_aluno)
     if request.method == 'POST':
         aluno.delete()
-        redirect('edu:alunos')
+        redirect('edu:list_alunos')

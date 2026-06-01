@@ -1,0 +1,10 @@
+<body>
+    {% extends 'blog/base.html' %}
+    {% block content %} 
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_table}}
+            <button type="submit">Enviar</button>
+        </form>
+    {% endblock %}
+</body>
