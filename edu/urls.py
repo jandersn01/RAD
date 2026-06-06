@@ -24,4 +24,5 @@ urlpatterns = [
     path("alunos/create/", views.create_aluno, name="create_aluno"),
     path("alunos/update/<int:id_aluno>/", views.update_aluno, name="update_aluno"),
     path("alunos/delete/<int:id_aluno>/", views.delete_aluno, name="delete_aluno"),
+    path("api/", include("edu.DRF.api_urls")),
 ]
